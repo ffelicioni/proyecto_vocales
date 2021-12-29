@@ -34,7 +34,7 @@ def extract_formants(file_path):
     return pd.DataFrame(formant_freq).transpose()
 
 # 'proyecto_vocales/data/raw/wav/*.wav'
-def read_dataframe(folder_contents,funcion):
+def prepare_dataframe(folder_contents,funcion):
     df=pd.DataFrame()
     for file_path in folder_contents:
         filename = Path(file_path).stem
