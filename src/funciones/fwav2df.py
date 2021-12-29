@@ -3,8 +3,10 @@ from librosa import lpc
 from scipy import signal
 from scipy.signal import find_peaks
 import numpy as np
+import pandas as pd
 import glob
 from pathlib import Path
+
 
 def extract_formants(file_path):   
     #version en python de código original de Gonzalo Sad de la materia Prodivoz 
@@ -34,7 +36,7 @@ def extract_formants(file_path):
     return pd.DataFrame(formant_freq).transpose()
 
 # 'proyecto_vocales/data/raw/wav/*.wav'
-def prepare_dataframe(folder_contents,funcion):
+def prepare_dataframe(folder_contents):
     df=pd.DataFrame()
     for file_path in folder_contents:
         filename = Path(file_path).stem
