@@ -42,8 +42,7 @@ def prepare_dataframe(folder_contents,funcion):
         metadata = {'file_path': file_path,
                   'vocal': filename_parts[0],
                   'id': filename_parts[1]}
-        if (funcion=='extract_formants'):
-            df1=extract_formants(file_path)
+        df1=extract_formants(file_path)
         df1['target']=filename_parts[0]
         df=pd.concat([df, df1], axis=0).reset_index(drop=True)
 
