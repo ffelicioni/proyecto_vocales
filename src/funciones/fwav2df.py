@@ -31,7 +31,7 @@ def extract_formants(file_path):
     
     return pd.DataFrame(formant_freq).transpose()
 
-#%% 'proyecto_vocales/data/raw/wav/*.wav'
+
 def prepare_dataframe(folder_contents):
     import numpy as np
     import pandas as pd
