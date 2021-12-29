@@ -1,6 +1,10 @@
 import numpy as np
 import pandas as pd
 
+from parselmouth import praat
+import parselmouth 
+    
+
 def extract_formants(file_path):
     import librosa
     from librosa import lpc
@@ -53,9 +57,7 @@ def prepare_dataframe(folder_contents, method):
 
 
 def extract_praat(file_path):
-    !pip install praat-parselmouth
-    from parselmouth import praat
-    import parselmouth 
+    #pip install praat-parselmouth
     sound = parselmouth.Sound(file_path)
     formants = praat.call(sound, "To Formant (burg)", 0.025, 5, 8000, 0.05, 50)# 5 formantes recomendado
     f1_list = []
