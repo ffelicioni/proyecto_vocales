@@ -1,4 +1,4 @@
-def graph_svm(X,clf,codes,alpha):
+def graph_svm(X,y,clf,codes,alpha):
     import numpy as np
     import matplotlib.pyplot as plt
     from sklearn.preprocessing import LabelEncoder
