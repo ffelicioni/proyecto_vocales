@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 
 def extract_formants(file_path):
-    import numpy as np
-    import pandas as pd
     import librosa
     from librosa import lpc
     from scipy import signal
@@ -30,3 +28,23 @@ def extract_formants(file_path):
     else:
         formant_freq=np.array([fmaximos[1], fmaximos[2]])
     return pd.DataFrame(formant_freq).transpose()
+
+
+def prepare_dataframe(folder_contents):
+    import numpy as np
+    import pandas as pd
+    from pathlib import Path
+    df=pd.DataFrame()
+    for file_path in folder_contents:
+        filename = Path(file_path).stem
+        filename_parts = filename.split('_')
+        metadata = {'file_path': file_path,
+                  'vocal': filename_parts[0],
+                  'id': filename_parts[1]}
+        df1=extract_formants(file_path)
+        df1['target']=filename_parts[0]
+        df=pd.concat([df, df1], axis=0).reset_index(drop=True)
+
+    df['target']=df['target'].str.upper()
+    df.sort_values(by=['target'], ascending=True,inplace=True)
+    return df
