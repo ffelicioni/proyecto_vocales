@@ -53,6 +53,7 @@ def prepare_dataframe(folder_contents, method):
 
 
 def extract_praat(file_path):
+    !pip install praat-parselmouth
     from parselmouth import praat
     import parselmouth 
     sound = parselmouth.Sound(file_path)
