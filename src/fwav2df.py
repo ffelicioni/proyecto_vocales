@@ -1,9 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from parselmouth import praat
-import parselmouth 
-    
+
 
 def extract_formants(file_path):
     import librosa
@@ -34,7 +32,7 @@ def extract_formants(file_path):
     return pd.DataFrame(formant_freq).transpose()
 
 
-def prepare_dataframe(folder_contents, method):
+def prepare_dataframe(folder_contents,funcion):
     from pathlib import Path
     df=pd.DataFrame()
     for file_path in folder_contents:
@@ -43,11 +41,11 @@ def prepare_dataframe(folder_contents, method):
         metadata = {'file_path': file_path,
                   'vocal': filename_parts[0],
                   'id': filename_parts[1]}
-        if (method=='lpc_rf'):
+        if (funcion=='lpc_rf'):
             df1=extract_formants(file_path)
-        else 
+        else:
             df1=extract_praat(file_path)
-        
+            
         df1['target']=filename_parts[0]
         df=pd.concat([df, df1], axis=0).reset_index(drop=True)
 
@@ -56,22 +54,11 @@ def prepare_dataframe(folder_contents, method):
     return df
 
 
-def extract_praat(file_path):
-    #pip install praat-parselmouth
-    sound = parselmouth.Sound(file_path)
-    formants = praat.call(sound, "To Formant (burg)", 0.025, 5, 8000, 0.05, 50)# 5 formantes recomendado
-    f1_list = []
-    f2_list = []
-    f_mean=[]
-    #f3_list = []
-    for i in range(2, formants.get_number_of_frames()+1):
-        f1 = formants.get_value_at_time(1, formants.get_time_step()*i)
-        f2 = formants.get_value_at_time(2, formants.get_time_step()*i)
-        f3 = formants.get_value_at_time(3, formants.get_time_step()*i)
-        f1_list.append(f1)
-        f2_list.append(f2)
-        #f3_list.append(f3)
-    f_mean.append(np.mean(f1_list))
-    f_mean.append(np.mean(f2_list))
-    #f_mean.append(np.median(f3_list))
-    return pd.DataFrame(f_mean).transpose()
+
+def read_audios_procesados(url):
+    vocales=['A','E','I','O','U']
+    df=pd.DataFrame()                     
+    for vocal in vocales:
+        df1=pd.read_csv(url+vocal+'.csv',header=None)
+        df1['target']=vocal
+    df=pd.concat([df, df1], axis=0).reset_index(drop=True)
