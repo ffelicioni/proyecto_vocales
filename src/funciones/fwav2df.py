@@ -1,14 +1,10 @@
-import librosa
-from librosa import lpc
-from scipy import signal
-from scipy.signal import find_peaks
-import numpy as np
-import pandas as pd
-import glob
-from pathlib import Path
-
-
-def extract_formants(file_path):   
+def extract_formants(file_path):  
+    import librosa
+    from librosa import lpc
+    from scipy import signal
+    from scipy.signal import find_peaks
+    import numpy as np
+    import pandas as pd
     #version en python de código original de Gonzalo Sad de la materia Prodivoz 
     x, Fs = librosa.load(file_path,sr=None)
     x=x*.95/np.max(np.abs(x))  #se normaliza sx a 95%
@@ -37,6 +33,9 @@ def extract_formants(file_path):
 
 # 'proyecto_vocales/data/raw/wav/*.wav'
 def prepare_dataframe(folder_contents):
+    import numpy as np
+    import pandas as pd
+    from pathlib import Path
     df=pd.DataFrame()
     for file_path in folder_contents:
         filename = Path(file_path).stem
