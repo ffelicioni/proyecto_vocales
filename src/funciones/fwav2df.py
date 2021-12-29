@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 
 def extract_formants(file_path):
+    import numpy as np
+    import pandas as pd
     import librosa
     from librosa import lpc
     from scipy import signal
